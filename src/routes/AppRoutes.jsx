@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register"
 import Dashboard from "../pages/Dashboard"
 import PrivateRoute from "../components/PrivateRoute"
+import ActivateAccount from "../components/Registration/ActiveAccount";
 
 const AppRoutes = () => {
   return (
