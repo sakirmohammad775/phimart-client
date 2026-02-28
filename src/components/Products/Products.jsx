@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import apiClient from "../../services/api-client";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../ErrorAlert";
 
 const Product = () => {
   const [products, setProducts] = useState([]);

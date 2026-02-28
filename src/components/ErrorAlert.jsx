@@ -1,4 +1,4 @@
-const ErroAlert = ({ error }) => {
+const ErrorAlert = ({ error }) => {
   return (
     <div role="alert" className="alert alert-error">
       <svg
@@ -19,4 +19,4 @@ const ErroAlert = ({ error }) => {
   );
 };
 
-export default ErroAlert;
+export default ErrorAlert;
