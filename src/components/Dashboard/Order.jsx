@@ -1,6 +1,25 @@
-
+import { useEffect, useState } from "react";
+import authApiClient from "../../services/auth-api-client"; // adjust path if needed
 
 const Order = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    authApiClient
+      .get("/orders/")
+      .then((res) => {
+        setOrders(res.data.results || res.data); // handles both cases
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="mt-6">Loading orders...</div>;
   return (
     <div className="mt-6 card bg-base-100 shadow-sm">
       <div className="card-body">
@@ -10,49 +29,30 @@ const Order = () => {
             <thead>
               <tr>
                 <th>Order ID</th>
-                <th>Customer</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Amount</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#ORD-7245</td>
-                <td>John Smith</td>
-                <td>
-                  <div className="badge badge-success">Completed</div>
-                </td>
-                <td>Mar 8, 2025</td>
-                <td>$125.00</td>
-              </tr>
-              <tr>
-                <td>#ORD-7244</td>
-                <td>Sarah Johnson</td>
-                <td>
-                  <div className="badge badge-warning">Processing</div>
-                </td>
-                <td>Mar 7, 2025</td>
-                <td>$89.99</td>
-              </tr>
-              <tr>
-                <td>#ORD-7243</td>
-                <td>Michael Brown</td>
-                <td>
-                  <div className="badge badge-info">Shipped</div>
-                </td>
-                <td>Mar 7, 2025</td>
-                <td>$245.50</td>
-              </tr>
-              <tr>
-                <td>#ORD-7242</td>
-                <td>Emily Davis</td>
-                <td>
-                  <div className="badge badge-success">Completed</div>
-                </td>
-                <td>Mar 6, 2025</td>
-                <td>$112.75</td>
-              </tr>
+              {orders.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="text-center">
+                    No Orders Found
+                  </td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.id}>
+                    <td>#{order.id}</td>
+                    <td>
+                      <div className="badge badge-outline">{order.status}</div>
+                    </td>
+                    <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                    <td>${order.total_price}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
