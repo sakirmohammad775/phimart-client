@@ -35,6 +35,7 @@ const Profile = () => {
       };
 
       await updateUserProfile(profilePayload);
+      
       // Password Change
       if (data.current_password && data.new_password) {
         await changePassword({

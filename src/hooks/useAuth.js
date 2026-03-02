@@ -84,10 +84,31 @@ const useAuth = () => {
 
       // After login set user
       await fetchUserProfile();
+      return { success: true };
     } catch (error) {
       setErrorMsg(error.response.data?.detail);
+      return { success: false };
     }
   };
+  // const loginUser = async (userData) => {
+  //   setErrorMsg("");
+  //   try {
+  //     const response = await apiClient.post("/auth/jwt/create/", userData);
+
+  //     setAuthTokens(response.data);
+  //     localStorage.setItem("authTokens", JSON.stringify(response.data));
+
+  //     await fetchUserProfile();
+
+  //     return { success: true };
+  //   } catch (error) {
+  //     const message =
+  //       error.response?.data?.detail || "Invalid email or password";
+  //     setErrorMsg(message);
+
+  //     return { success: false };
+  //   }
+  // };
 
   // Register User
   const registerUser = async (userData) => {
@@ -109,6 +130,8 @@ const useAuth = () => {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
+    localStorage.removeItem("cartId");
+    navigate("/login", { replace: true });
   };
 
   return {

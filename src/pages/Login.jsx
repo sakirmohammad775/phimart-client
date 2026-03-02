@@ -19,8 +19,9 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      await loginUser(data);
-      navigate("/dashboard");
+      const response = await loginUser(data);
+      console.log(response);
+      if (response.success) navigate("/dashboard");
     } catch (error) {
       console.log("Login Failed", error);
     } finally {
@@ -87,7 +88,6 @@ const Login = () => {
               {loading ? "Logging In..." : "Login"}
             </button>
           </form>
-          
 
           <div className="text-center mt-4">
             <p className="text-base-content/70">
